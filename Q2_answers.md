@@ -1,10 +1,6 @@
-# Question 2 - written response (DRAFT)
+# Question 2 - 
 
-> Values in **[brackets]** must be checked against your real run (`output/summary.csv`,
-> `params.json`) before you submit. Everything below describes what `annotate_ssa.py` does.
-> Delete this note and trim to four pages.
-
-**Method.** Script-based (custom Python pipeline, repository: **[GitHub link]**). Detection runs
+**Method.** Script-based (custom Python pipeline, repository: [https://github.com/anna7084/SSA_annotation.git]. Detection runs
 on the full 9568 x 6380 frame, then the result is cut into tiles. Class 0 = blob (star), class 1 = streak.
 
 ## a) Pre-processing
