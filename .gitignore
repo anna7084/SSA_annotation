@@ -1,0 +1,9 @@
+Dataset_Assessment/
+output/
+tune/
+*.fits
+*.fit
+*.fts
+__pycache__/
+.venv/
+*.pdf
