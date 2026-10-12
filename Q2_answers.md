@@ -6,14 +6,13 @@ on the full 9568 x 6380 frame, then the result is cut into tiles. Class 0 = blob
 ## a) Pre-processing
 
 1. **Inspection.** Each FITS file read as a 2-D uint16 array; background level, robust noise
-   sigma (1.4826 x MAD) and saturation fraction checked (`inspect_fits.py`). Typical values:
-   background **[~xxxx]** ADU, sigma **[~xx]** ADU.
+   sigma (1.4826 x MAD) and saturation fraction checked (`inspect_fits.py`).
 2. **Local background and noise map.** 128 x 128 px mesh, 3-sigma iterative clipping per box,
    median-filtered across boxes and bilinearly up-sampled. This follows sky gradients and is not
    biased by stars because they are clipped.
 3. **Hot-pixel repair.** A pixel is replaced by the 3x3 median when it is > 8 sigma above the
    local background *and* all eight neighbours are < 2.5 sigma - a real star always has a
-   neighbourhood, a hot pixel does not. **[~xxx]** pixels per frame repaired.
+   neighbourhood, a hot pixel does not.
 4. **Flattening and stretch.** Background subtracted (global sky level re-added), then one linear
    stretch per image, (bg - 2 sigma) .. (bg + 10 sigma), to 8 bit. One scaling per image, so all
    tiles of an image share the same brightness mapping.
@@ -44,11 +43,9 @@ pixel extent); elongation = L / W.
   (short/fat streaks - a wide, short trail is still much longer than the PSF).
 * **Blob:** everything else. A star is round, so L/W is near 1 and L is a few pixels.
 * **Review flags** in `catalogues/*_objects.csv`: blobs with L/W >= 1.6 and L >= 8, and streaks
-  with L < 15.6 px, were re-checked by eye in the overlay. **[n]** objects flagged in total,
-  **[n]** changed.
+  with L < 15.6 px, were re-checked by eye in the overlay.
 
-*Assumption:* a star's trail is shorter than ~12 px because exposures are short; PSF FWHM about
-**[x]** px. The cutoffs are command-line parameters.
+*Assumption:* a star's trail is shorter than ~12 px because exposures are short.
 
 ## d) Faint / small blobs as the star class
 
