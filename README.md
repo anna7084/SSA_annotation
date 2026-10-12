@@ -10,6 +10,17 @@ Automatic pixel-level annotation of single-band 16-bit FITS space-imagery:
 Output is YOLO-Ultralytics **segmentation** format on 1024 x 1024 tiles, plus the
 re-patched full-size images with the labels drawn on top for visual inspection.
 
+## Dataset and output are NOT included in this repository
+
+This repository contains the **code only**.
+
+* **Dataset:** the 10 raw FITS images (about 120 MB each) are not included. They are
+  confidential assessment material and exceed GitHub's file-size limit. To run the pipeline,
+  place the FITS files in a folder yourself (e.g. `../Dataset_Assessment/`) and pass it with `--input`.
+* **Output:** the generated results (tiles, YOLO labels, re-patched images, overlays, masks,
+  catalogues) are also not included, for size reasons. They are delivered **in the submission
+  zip file**, in the `output/` folder. You can also regenerate them by running the commands below.
+
 ## Setup
 
 ```bash
@@ -21,15 +32,15 @@ pip install -r requirements.txt
 
 ```bash
 # 0) (optional) look at one raw frame: statistics + a 4x down-sampled preview
-python inspect_fits.py Datasets_Assessment/image_01.fits preview.png
+python inspect_fits.py ../Dataset_Assessment/image_01.fits preview.png
 
 # 1) tune on a single 1024x1024 crop first (fast, ~2 s)
-python annotate_ssa.py --input Datasets_Assessment/image_01.fits --output tune \
+python annotate_ssa.py --input ../Dataset_Assessment/image_01.fits --output tune \
        --roi 3000 2000 1024 1024
 #    open tune/overlays/*.jpg, adjust --seed / --low / --peak-frac / --streak-len ... if needed
 
 # 2) full run on all 10 images (~30 s and ~3 GB RAM per image)
-python annotate_ssa.py --input Datasets_Assessment --output output
+python annotate_ssa.py --input ../Dataset_Assessment --output output
 ```
 
 ## Output layout
@@ -44,7 +55,9 @@ output/
                                     to the processed image, the script asserts this)
   overlays/<image>_overlay.jpg      full-size image + coloured masks read back from the
                                     label files (blob = purple, streak = red)
-  masks/<image>_mask.png            full-size semantic mask: 0 background, 1 blob, 2 streak
+  masks/<image>_mask.png            full-size semantic mask, pixel values 0 background, 1 blob, 2 streak
+                                    (looks black in viewers - that is expected)
+  masks/<image>_mask_vis.png        same mask in colour for viewing (blob purple, streak red)
   catalogues/<image>_objects.csv    per-object geometry/SNR/class + review flags
   catalogues/<image>_tiles.json     tile offsets
   summary.csv, params.json          counts and the exact parameters used
