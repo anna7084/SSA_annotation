@@ -31,9 +31,6 @@ pip install -r requirements.txt
 ## Run
 
 ```bash
-# 0) (optional) look at one raw frame: statistics + a 4x down-sampled preview
-python inspect_fits.py ../Dataset_Assessment/image_01.fits preview.png
-
 # 1) tune on a single 1024x1024 crop first (fast, ~2 s)
 python annotate_ssa.py --input ../Dataset_Assessment/image_01.fits --output tune \
        --roi 3000 2000 1024 1024
