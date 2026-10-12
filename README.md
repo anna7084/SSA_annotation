@@ -84,10 +84,5 @@ Check the result with Ultralytics, e.g. `yolo segment train data=output/dataset/
 All thresholds are command-line options (`python annotate_ssa.py -h`).
 
 ## Notes / limitations
-
-* Defaults were validated on a synthetic frame with the same size, dtype and noise character
-  as the assessment images, **not** on the real data - tune on a crop of a real image first.
 * Streaks broken into several separate pieces by noise (very faint, beaded) are not
   re-linked; crowded stars closer than ~2 px merge into one blob.
-* Without `astropy` the script falls back to a minimal FITS reader (single image, BITPIX 16);
-  install astropy for anything else.
